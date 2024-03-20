@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Categorie;
+namespace App\Http\Requests\Categorie\SousCategorie;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSousSousCategorieRequest extends FormRequest
+class StoreSousCategorieRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class UpdateSousSousCategorieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|sometimes'
+            'name' => 'required|string',
+            'sousSousCategorieId' => 'nullable|exists:sous_sous_categorie,id',
         ];
     }
 }

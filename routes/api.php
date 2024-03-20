@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Categorie\SousCategorieController;
 use App\Http\Controllers\Categorie\SousSouSCategotieController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::apiResource('sous-sous-categorie', SousSouSCategotieController::class);
+Route::apiResource('sous-categorie', SousCategorieController::class);

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Categorie;
+namespace App\Http\Requests\Categorie\SousCategorie;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSousSousCategorieRequest extends FormRequest
+class IndexSousCategorieRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StoreSousSousCategorieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|required'
+            'keyword' => 'nullable|string',
         ];
     }
 }
