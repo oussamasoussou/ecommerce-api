@@ -671,6 +671,228 @@
                     }
                 }
             }
+        },
+        "/api/livraisons": {
+            "get": {
+                "tags": [
+                    "Livraison"
+                ],
+                "summary": "Récupère la liste des livraisons",
+                "description": "Récupère la liste de toutes les livraisons disponibles.",
+                "operationId": "getLivraisons",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Livraison"
+                ],
+                "summary": "Crée une nouvelle livraison",
+                "description": "Crée une nouvelle livraison avec les données fournies dans la requête.",
+                "operationId": "createLivraison",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "prix",
+                                    "description1",
+                                    "description2"
+                                ],
+                                "properties": {
+                                    "prix": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10.99
+                                    },
+                                    "description1": {
+                                        "type": "string",
+                                        "example": "Description 1"
+                                    },
+                                    "description2": {
+                                        "type": "string",
+                                        "example": "Description 2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/livraisons/{id}": {
+            "get": {
+                "tags": [
+                    "Livraison"
+                ],
+                "summary": "Obtient une livraison par son ID",
+                "description": "Récupère les détails d'une livraison spécifiée par son ID.",
+                "operationId": "getLivraisonById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la livraison à récupérer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Livraison"
+                ],
+                "summary": "Met à jour une livraison",
+                "description": "Met à jour une livraison spécifiée par son ID avec les données fournies dans la requête.",
+                "operationId": "updateLivraison",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la livraison à mettre à jour",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "prix",
+                                    "description1",
+                                    "description2"
+                                ],
+                                "properties": {
+                                    "prix": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10.99
+                                    },
+                                    "description1": {
+                                        "type": "string",
+                                        "example": "Description 1 mise à jour"
+                                    },
+                                    "description2": {
+                                        "type": "string",
+                                        "example": "Description 2 mise à jour"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Livraison"
+                ],
+                "summary": "Supprime une livraison",
+                "description": "Supprime une livraison spécifiée par son ID.",
+                "operationId": "delete-livraison",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la livraison à supprimer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
         }
     }
 }
