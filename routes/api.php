@@ -3,6 +3,7 @@
 use App\Http\Controllers\Categorie\CategorieController;
 use App\Http\Controllers\Categorie\SousCategorieController;
 use App\Http\Controllers\Categorie\SousSouSCategotieController;
+use App\Http\Controllers\Livraison\LivraisonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('categorie', CategorieController::class);
 Route::apiResource('sous-categorie', SousCategorieController::class);
 Route::apiResource('sous-sous-categorie', SousSouSCategotieController::class);
+Route::apiResource('livraisons', LivraisonController::class);
