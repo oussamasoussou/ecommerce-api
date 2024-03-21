@@ -72,8 +72,8 @@ class CategorieController extends Controller
     /**
      * @OA\Post(
      *      path="/api/categorie",
-     *      operationId="storeSousSousCategorie",
-     *      tags={"Sous Sous Catégorie"},
+     *      operationId="store-categorie",
+     *      tags={"Catégorie"},
      *      summary="Crée une nouvelle catégorie",
      *      description="Crée une nouvelle catégorie à partir des données fournies dans la requête.",
      *      @OA\RequestBody(
@@ -123,8 +123,8 @@ class CategorieController extends Controller
     /**
      * @OA\Get(
      *      path="/api/categorie/{id}",
-     *      operationId="getSousSousCategorieById",
-     *      tags={"Sous Sous Catégorie"},
+     *      operationId="get-categorie-by-id",
+     *      tags={"Catégorie"},
      *      summary="Récupère une catégorie par son ID",
      *      description="Récupère une catégorie spécifiée par son ID.",
      *      @OA\Parameter(
@@ -172,8 +172,8 @@ class CategorieController extends Controller
     /**
      * @OA\Put(
      *      path="/api/categorie/{id}",
-     *      operationId="updateSousSousCategorie",
-     *      tags={"Sous Sous Catégorie"},
+     *      operationId="update-categorie",
+     *      tags={"Catégorie"},
      *      summary="Met à jour une catégorie",
      *      description="Met à jour une catégorie spécifiée par son ID avec les données fournies dans la requête.",
      *      @OA\Parameter(
@@ -234,8 +234,8 @@ class CategorieController extends Controller
     /**
      * @OA\Delete(
      *      path="/api/categorie/{id}",
-     *      operationId="deleteSousSousCategorie",
-     *      tags={"Sous Sous Catégorie"},
+     *      operationId="delete-categorie",
+     *      tags={"Catégorie"},
      *      summary="Supprime une catégorie",
      *      description="Supprime une catégorie spécifiée par son ID.",
      *      @OA\Parameter(

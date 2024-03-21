@@ -19,12 +19,446 @@
         }
     ],
     "paths": {
+        "/api/categorie": {
+            "get": {
+                "tags": [
+                    "Catégorie"
+                ],
+                "summary": "Get all categorie.",
+                "description": "Get all categorie.",
+                "operationId": "0dd14a268b009a62c8908e86dc8898b9",
+                "parameters": [
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "Mot-clé à rechercher pour for category",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Catégorie"
+                ],
+                "summary": "Crée une nouvelle catégorie",
+                "description": "Crée une nouvelle catégorie à partir des données fournies dans la requête.",
+                "operationId": "store-categorie",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nom de la catégorie"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/categorie/{id}": {
+            "get": {
+                "tags": [
+                    "Catégorie"
+                ],
+                "summary": "Récupère une catégorie par son ID",
+                "description": "Récupère une catégorie spécifiée par son ID.",
+                "operationId": "get-categorie-by-id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la catégorie à récupérer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Catégorie"
+                ],
+                "summary": "Met à jour une catégorie",
+                "description": "Met à jour une catégorie spécifiée par son ID avec les données fournies dans la requête.",
+                "operationId": "update-categorie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la catégorie à mettre à jour",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nouveau nom de la catégorie"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Catégorie"
+                ],
+                "summary": "Supprime une catégorie",
+                "description": "Supprime une catégorie spécifiée par son ID.",
+                "operationId": "delete-categorie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la catégorie à supprimer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/sous-categorie": {
+            "get": {
+                "tags": [
+                    "Sous Catégorie"
+                ],
+                "summary": "Get all sous-categorie.",
+                "description": "Get all sous-categorie.",
+                "operationId": "c57d3f8dbaf123183300ce4d0c73c38c",
+                "parameters": [
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "Mot-clé à rechercher pour for agents",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Sous Catégorie"
+                ],
+                "summary": "Crée une nouvelle sous-catégorie",
+                "description": "Crée une nouvelle sous-catégorie à partir des données fournies dans la requête.",
+                "operationId": "storeSousCategorie",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "categorieId"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nom de la sous-catégorie"
+                                    },
+                                    "categorieId": {
+                                        "description": "ID de la catégorie parente",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/sous-categorie/{id}": {
+            "get": {
+                "tags": [
+                    "Sous Catégorie"
+                ],
+                "summary": "Récupère une sous-catégorie par son ID",
+                "description": "Récupère une sous-catégorie spécifiée par son ID.",
+                "operationId": "getSousCategorieById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sous-catégorie à récupérer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Sous Catégorie"
+                ],
+                "summary": "Met à jour une sous-catégorie",
+                "description": "Met à jour une sous-catégorie spécifiée par son ID avec les données fournies dans la requête.",
+                "operationId": "updateSousCategorie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sous-catégorie à mettre à jour",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "categorieId"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nouveau nom de la sous-catégorie"
+                                    },
+                                    "categorieId": {
+                                        "description": "ID de la catégorie parente",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Sous Catégorie"
+                ],
+                "summary": "Supprime une sous-catégorie",
+                "description": "Supprime une sous-catégorie spécifiée par son ID.",
+                "operationId": "deleteSousCategorie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sous-catégorie à supprimer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
         "/api/sous-sous-categorie": {
             "get": {
                 "tags": [
-                    "Sous Sous Categorie"
+                    "Sous Sous Catégorie"
                 ],
-                "summary": "Get all sous-sous-categorie.",
+                "summary": "Get-all-sous-sous-categorie.",
                 "description": "Get all sous-sous-categorie.",
                 "operationId": "24a1907925a7601744f36dcf564ce3fc",
                 "parameters": [
@@ -58,23 +492,29 @@
             },
             "post": {
                 "tags": [
-                    "Sous Sous Categorie"
+                    "Sous Sous Catégorie"
                 ],
                 "summary": "Crée une nouvelle sous-sous-catégorie",
                 "description": "Crée une nouvelle sous-sous-catégorie à partir des données fournies dans la requête.",
-                "operationId": "storeSousSousCategorie",
+                "operationId": "store-sous-sous-categorie",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "name"
+                                    "name",
+                                    "sousCategorieId"
                                 ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
                                         "example": "Nom de la sous-sous-catégorie"
+                                    },
+                                    "sousCategorieId": {
+                                        "description": "ID de la sous catégorie parente",
+                                        "type": "integer",
+                                        "example": 1
                                     }
                                 },
                                 "type": "object"
@@ -104,11 +544,11 @@
         "/api/sous-sous-categorie/{id}": {
             "get": {
                 "tags": [
-                    "Sous Sous Categorie"
+                    "Sous Sous Catégorie"
                 ],
                 "summary": "Récupère une sous-sous-catégorie par son ID",
                 "description": "Récupère une sous-sous-catégorie spécifiée par son ID.",
-                "operationId": "getSousSousCategorieById",
+                "operationId": "get-sous-sous-categorie-by-id",
                 "parameters": [
                     {
                         "name": "id",
@@ -140,11 +580,11 @@
             },
             "put": {
                 "tags": [
-                    "Sous Sous Categorie"
+                    "Sous Sous Catégorie"
                 ],
                 "summary": "Met à jour une sous-sous-catégorie",
                 "description": "Met à jour une sous-sous-catégorie spécifiée par son ID avec les données fournies dans la requête.",
-                "operationId": "updateSousSousCategorie",
+                "operationId": "update-sous-sous-categorie",
                 "parameters": [
                     {
                         "name": "id",
@@ -157,17 +597,19 @@
                     }
                 ],
                 "requestBody": {
-                    "required": true,
+                    "required": false,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "name"
-                                ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "Nouveau nom de la sous-sous-catégorie"
+                                        "example": "Nom de la sous-sous-catégorie"
+                                    },
+                                    "sousCategorieId": {
+                                        "description": "ID de la sous catégorie parente",
+                                        "type": "integer",
+                                        "example": 1
                                     }
                                 },
                                 "type": "object"
@@ -195,11 +637,11 @@
             },
             "delete": {
                 "tags": [
-                    "Sous Sous Categorie"
+                    "Sous Sous Catégorie"
                 ],
                 "summary": "Supprime une sous-sous-catégorie",
                 "description": "Supprime une sous-sous-catégorie spécifiée par son ID.",
-                "operationId": "deleteSousSousCategorie",
+                "operationId": "delete-sous-sous-categorie",
                 "parameters": [
                     {
                         "name": "id",

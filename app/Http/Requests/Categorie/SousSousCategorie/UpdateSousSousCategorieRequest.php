@@ -22,7 +22,8 @@ class UpdateSousSousCategorieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|sometimes'
+            'name' => 'string|sometimes',
+            'sousCategorieId' => 'nullable|exists:sous_categorie,id',
         ];
     }
 }

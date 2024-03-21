@@ -22,7 +22,8 @@ class StoreSousSousCategorieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|required'
+            'name' => 'string|required',
+            'sousCategorieId' => 'nullable|exists:sous_categorie,id',
         ];
     }
 }

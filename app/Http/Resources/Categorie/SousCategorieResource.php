@@ -17,7 +17,7 @@ class SousCategorieResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "sousSousCategorie" => new SousSousCategorieResource($this->sousSousCategorie),
+            "categorie" => new CategorieResource($this->categorie),
         ];
     }
 }
