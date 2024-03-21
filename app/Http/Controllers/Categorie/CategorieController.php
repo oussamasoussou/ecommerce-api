@@ -6,28 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Response;
-use App\Models\SousCategorie;
+use App\Models\Categorie;
 use Illuminate\Database\Eloquent\Builder;
-use App\Http\Resources\Categorie\SousCategorieResource;
-use App\Http\Requests\Categorie\SousCategorie\IndexSousCategorieRequest;
-use App\Http\Requests\Categorie\SousCategorie\StoreSousCategorieRequest;
-use App\Http\Requests\Categorie\SousCategorie\UpdateSousCategorieRequest;
+use App\Http\Resources\Categorie\CategorieResource;
+use App\Http\Requests\Categorie\Categorie\IndexCategorieRequest;
+use App\Http\Requests\Categorie\Categorie\StoreCategorieRequest;
+use App\Http\Requests\Categorie\Categorie\UpdateCategorieRequest;
 
-class SousCategorieController extends Controller
+class CategorieController extends Controller
 {
     use GeneralTrait;
 
     /**
      * @OA\Get(
-     *     path="/api/sous-categorie",
-     *     tags={"Sous Catégorie"},
-     *     summary="Get all sous-categorie.",
-     *     description="Get all sous-categorie.",
+     *     path="/api/categorie",
+     *     tags={"Catégorie"},
+     *     summary="Get all categorie.",
+     *     description="Get all categorie.",
      * 
      *  @OA\Parameter(
      *         name="keyword",
      *         in="query",
-     *         description="Mot-clé à rechercher pour for agents",
+     *         description="Mot-clé à rechercher pour for category",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
@@ -53,17 +53,17 @@ class SousCategorieController extends Controller
      *     )
      * )
      */
-    public function index(IndexSousCategorieRequest $request)
+    public function index(IndexCategorieRequest $request)
     {
         try {
-            $sousCategorieQuery = SousCategorie::query();
+            $categorieQuery = Categorie::query();
             if ($request->has('keyword')) {
                 $keyword = '%' . $request->input('keyword') . '%';
-                $sousCategorieQuery->where('name', 'like', $keyword);
+                $categorieQuery->where('name', 'like', $keyword);
             }
-            $sousCategories = $sousCategorieQuery->orderBy('name', 'asc')->get();
-            $sousCategorie = SousCategorieResource::collection($sousCategories);
-            return $this->returnData($sousCategorie, 200, 'Liste des sous categorie réaccordées avec succès');
+            $categories = $categorieQuery->orderBy('name', 'asc')->get();
+            $categorie = CategorieResource::collection($categories);
+            return $this->returnData($categorie, 200, 'Liste des categorie réaccordées avec succès');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
@@ -71,17 +71,16 @@ class SousCategorieController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/api/sous-categorie",
-     *      operationId="storeSousCategorie",
-     *      tags={"Sous Catégorie"},
-     *      summary="Crée une nouvelle sous-catégorie",
-     *      description="Crée une nouvelle sous-catégorie à partir des données fournies dans la requête.",
+     *      path="/api/categorie",
+     *      operationId="storeSousSousCategorie",
+     *      tags={"Sous Sous Catégorie"},
+     *      summary="Crée une nouvelle catégorie",
+     *      description="Crée une nouvelle catégorie à partir des données fournies dans la requête.",
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"name", "sousSousCategorieId"},
-     *              @OA\Property(property="name", type="string", example="Nom de la sous-catégorie"),
-     *              @OA\Property(property="sousSousCategorieId", type="integer", example=1, description="ID de la sous-sous-catégorie parente")
+     *              required={"name"},
+     *              @OA\Property(property="name", type="string", example="Nom de la catégorie")
      *          )
      *      ),
      *     @OA\Response(
@@ -106,16 +105,16 @@ class SousCategorieController extends Controller
      * )
      */
 
-    public function store(StoreSousCategorieRequest $request)
+
+    public function store(StoreCategorieRequest $request)
     {
         try {
-            $sousCategorie = SousCategorie::create([
+            $categorie = Categorie::create([
                 'name' => $request->name,
-                'sous_sous_categorie_id' => $request->sousSousCategorieId,
             ]);
-            $sousCategorieQuery = SousCategorie::orderBy('id', 'desc')->get();
-            $sousCategorie = SousCategorieResource::collection($sousCategorieQuery);
-            return $this->returnData($sousCategorie, 200, 'Liste des sous categorie réaccordé avec Success');
+            $categorieQuery = Categorie::orderBy('id', 'desc')->get();
+            $categorie = CategorieResource::collection($categorieQuery);
+            return $this->returnData($categorie, 200, 'Liste des categorie réaccordé avec Success');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
@@ -123,14 +122,14 @@ class SousCategorieController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/sous-categorie/{id}",
-     *      operationId="getSousCategorieById",
-     *      tags={"Sous Catégorie"},
-     *      summary="Récupère une sous-catégorie par son ID",
-     *      description="Récupère une sous-catégorie spécifiée par son ID.",
+     *      path="/api/categorie/{id}",
+     *      operationId="getSousSousCategorieById",
+     *      tags={"Sous Sous Catégorie"},
+     *      summary="Récupère une catégorie par son ID",
+     *      description="Récupère une catégorie spécifiée par son ID.",
      *      @OA\Parameter(
      *          name="id",
-     *          description="ID de la sous-catégorie à récupérer",
+     *          description="ID de la catégorie à récupérer",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -162,9 +161,9 @@ class SousCategorieController extends Controller
     public function show(string $id)
     {
         try {
-            $sousCategorie = SousCategorie::findOrFail($id);
-            $sousCategorie = new SousCategorieResource($sousCategorie);
-            return $this->returnData($sousCategorie, 200, 'Sous categorie réaccordé avec Success');
+            $categorie = Categorie::findOrFail($id);
+            $categorie = new CategorieResource($categorie);
+            return $this->returnData($categorie, 200, 'Categorie réaccordé avec Success');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
@@ -172,14 +171,14 @@ class SousCategorieController extends Controller
 
     /**
      * @OA\Put(
-     *      path="/api/sous-categorie/{id}",
-     *      operationId="updateSousCategorie",
-     *      tags={"Sous Catégorie"},
-     *      summary="Met à jour une sous-catégorie",
-     *      description="Met à jour une sous-catégorie spécifiée par son ID avec les données fournies dans la requête.",
+     *      path="/api/categorie/{id}",
+     *      operationId="updateSousSousCategorie",
+     *      tags={"Sous Sous Catégorie"},
+     *      summary="Met à jour une catégorie",
+     *      description="Met à jour une catégorie spécifiée par son ID avec les données fournies dans la requête.",
      *      @OA\Parameter(
      *          name="id",
-     *          description="ID de la sous-catégorie à mettre à jour",
+     *          description="ID de la catégorie à mettre à jour",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -189,9 +188,8 @@ class SousCategorieController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"name", "sousSousCategorieId"},
-     *              @OA\Property(property="name", type="string", example="Nouveau nom de la sous-catégorie"),
-     *              @OA\Property(property="sousSousCategorieId", type="integer", example=1, description="ID de la sous-sous-catégorie parente")
+     *              required={"name"},
+     *              @OA\Property(property="name", type="string", example="Nouveau nom de la catégorie")
      *          )
      *      ),
      *     @OA\Response(
@@ -216,33 +214,33 @@ class SousCategorieController extends Controller
      * )
      */
 
-
-    public function update(UpdateSousCategorieRequest $request, string $id)
+    public function update(UpdateCategorieRequest $request, string $id)
     {
         try {
-            $sousCategorie = SousCategorie::findOrFail($id);
+            $categorie = Categorie::findOrFail($id);
 
-            $dataToUpdate = $request->only(['name', 'sousSousCategorieId']);
-            $sousCategorie->update($dataToUpdate);
+            $dataToUpdate = $request->only(['name']);
+            $categorie->update($dataToUpdate);
 
-            $sousCategorieQuery = SousCategorie::orderBy('id', 'desc')->get();
-            $sousCategorie = SousCategorieResource::collection($sousCategorieQuery);
+            $categorieQuery = Categorie::orderBy('id', 'desc')->get();
+            $categorie = CategorieResource::collection($categorieQuery);
 
-            return $this->returnData($sousCategorie, 200, 'Liste des sous categorie réaccordé avec succès');
+            return $this->returnData($categorie, 200, 'Liste des categorie réaccordé avec succès');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
     }
+
     /**
      * @OA\Delete(
-     *      path="/api/sous-categorie/{id}",
-     *      operationId="deleteSousCategorie",
-     *      tags={"Sous Catégorie"},
-     *      summary="Supprime une sous-catégorie",
-     *      description="Supprime une sous-catégorie spécifiée par son ID.",
+     *      path="/api/categorie/{id}",
+     *      operationId="deleteSousSousCategorie",
+     *      tags={"Sous Sous Catégorie"},
+     *      summary="Supprime une catégorie",
+     *      description="Supprime une catégorie spécifiée par son ID.",
      *      @OA\Parameter(
      *          name="id",
-     *          description="ID de la sous-catégorie à supprimer",
+     *          description="ID de la catégorie à supprimer",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -274,11 +272,11 @@ class SousCategorieController extends Controller
     public function destroy(string $id)
     {
         try {
-            $sousCategorie = SousCategorie::findOrFail($id);
-            $sousCategorie->delete();
-            $sousCategorieQuery = SousCategorie::orderBy('id', 'desc')->get();
-            $sousCategorie = SousCategorieResource::collection($sousCategorieQuery);
-            return $this->returnData($sousCategorie, 200, 'Liste des sous categorie réaccordé avec Success');
+            $categorie = Categorie::findOrFail($id);
+            $categorie->delete();
+            $categorieQuery = Categorie::orderBy('id', 'desc')->get();
+            $categorie = CategorieResource::collection($categorieQuery);
+            return $this->returnData($categorie, 200, 'Liste des categorie réaccordé avec Success');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
