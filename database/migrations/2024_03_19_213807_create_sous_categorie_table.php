@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('sous_categorie', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->foreignId('sous_sous_categorie_id')
+            $table->foreignId('categorie_id')
                 ->nullable()
-                ->constrained('sous_sous_categorie')
+                ->constrained('categorie')
                 ->onUpdate('cascade');
             $table->timestamps();
         });

@@ -23,7 +23,7 @@ class UpdateSousCategorieRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'sousSousCategorieId' => 'nullable|exists:sous_sous_categorie,id',
+            'categorieId' => 'nullable|exists:categorie,id',
         ];
     }
 }

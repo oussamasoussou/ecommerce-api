@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('sous_sous_categorie', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->foreignId('sous_categorie_id')
+                ->nullable()
+                ->constrained('sous_categorie')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

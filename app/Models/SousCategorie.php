@@ -12,11 +12,11 @@ class SousCategorie extends Model
 
     protected $fillable = [
         'name',
-        'sous_sous_categorie_id',
+        'categorie_id',
     ];
 
-    public function sousSousCategorie()
+    public function categorie()
     {
-        return $this->belongsTo(SousSousCategorie::class);
+        return $this->belongsTo(Categorie::class);
     }
 }

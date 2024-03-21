@@ -79,9 +79,9 @@ class SousCategorieController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"name", "sousSousCategorieId"},
+     *              required={"name", "categorieId"},
      *              @OA\Property(property="name", type="string", example="Nom de la sous-catégorie"),
-     *              @OA\Property(property="sousSousCategorieId", type="integer", example=1, description="ID de la sous-sous-catégorie parente")
+     *              @OA\Property(property="categorieId", type="integer", example=1, description="ID de la catégorie parente")
      *          )
      *      ),
      *     @OA\Response(
@@ -111,7 +111,7 @@ class SousCategorieController extends Controller
         try {
             $sousCategorie = SousCategorie::create([
                 'name' => $request->name,
-                'sous_sous_categorie_id' => $request->sousSousCategorieId,
+                'categorie_id' => $request->categorieId,
             ]);
             $sousCategorieQuery = SousCategorie::orderBy('id', 'desc')->get();
             $sousCategorie = SousCategorieResource::collection($sousCategorieQuery);
@@ -189,9 +189,9 @@ class SousCategorieController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"name", "sousSousCategorieId"},
+     *              required={"name", "categorieId"},
      *              @OA\Property(property="name", type="string", example="Nouveau nom de la sous-catégorie"),
-     *              @OA\Property(property="sousSousCategorieId", type="integer", example=1, description="ID de la sous-sous-catégorie parente")
+     *              @OA\Property(property="categorieId", type="integer", example=1, description="ID de la catégorie parente")
      *          )
      *      ),
      *     @OA\Response(
@@ -222,7 +222,7 @@ class SousCategorieController extends Controller
         try {
             $sousCategorie = SousCategorie::findOrFail($id);
 
-            $dataToUpdate = $request->only(['name', 'sousSousCategorieId']);
+            $dataToUpdate = $request->only(['name', 'categorieId']);
             $sousCategorie->update($dataToUpdate);
 
             $sousCategorieQuery = SousCategorie::orderBy('id', 'desc')->get();

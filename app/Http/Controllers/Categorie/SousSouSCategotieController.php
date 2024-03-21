@@ -22,7 +22,7 @@ class SousSouSCategotieController extends Controller
      * @OA\Get(
      *     path="/api/sous-sous-categorie",
      *     tags={"Sous Sous Catégorie"},
-     *     summary="Get all sous-sous-categorie.",
+     *     summary="Get-all-sous-sous-categorie.",
      *     description="Get all sous-sous-categorie.",
      * 
      *  @OA\Parameter(
@@ -72,15 +72,17 @@ class SousSouSCategotieController extends Controller
     /**
      * @OA\Post(
      *      path="/api/sous-sous-categorie",
-     *      operationId="storeSousSousCategorie",
+     *      operationId="store-sous-sous-categorie",
      *      tags={"Sous Sous Catégorie"},
      *      summary="Crée une nouvelle sous-sous-catégorie",
      *      description="Crée une nouvelle sous-sous-catégorie à partir des données fournies dans la requête.",
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"name"},
-     *              @OA\Property(property="name", type="string", example="Nom de la sous-sous-catégorie")
+     *              required={"name", "sousCategorieId"},
+     *              @OA\Property(property="name", type="string", example="Nom de la sous-sous-catégorie"),
+     *              @OA\Property(property="sousCategorieId", type="integer", example=1, description="ID de la sous catégorie parente")
+
      *          )
      *      ),
      *     @OA\Response(
@@ -110,6 +112,7 @@ class SousSouSCategotieController extends Controller
         try {
             $sousSousCategorie = SousSousCategorie::create([
                 'name' => $request->name,
+                'sous_categorie_id' => $request->sousCategorieId
             ]);
             $sousSousCategorieQuery = SousSousCategorie::orderBy('id', 'desc')->get();
             $sousSousCategorie = SousSousCategorieResource::collection($sousSousCategorieQuery);
@@ -122,7 +125,7 @@ class SousSouSCategotieController extends Controller
     /**
      * @OA\Get(
      *      path="/api/sous-sous-categorie/{id}",
-     *      operationId="getSousSousCategorieById",
+     *      operationId="get-sous-sous-categorie-by-id",
      *      tags={"Sous Sous Catégorie"},
      *      summary="Récupère une sous-sous-catégorie par son ID",
      *      description="Récupère une sous-sous-catégorie spécifiée par son ID.",
@@ -171,7 +174,7 @@ class SousSouSCategotieController extends Controller
     /**
      * @OA\Put(
      *      path="/api/sous-sous-categorie/{id}",
-     *      operationId="updateSousSousCategorie",
+     *      operationId="update-sous-sous-categorie",
      *      tags={"Sous Sous Catégorie"},
      *      summary="Met à jour une sous-sous-catégorie",
      *      description="Met à jour une sous-sous-catégorie spécifiée par son ID avec les données fournies dans la requête.",
@@ -185,10 +188,11 @@ class SousSouSCategotieController extends Controller
      *          )
      *      ),
      *      @OA\RequestBody(
-     *          required=true,
+     *          required=false,
      *          @OA\JsonContent(
-     *              required={"name"},
-     *              @OA\Property(property="name", type="string", example="Nouveau nom de la sous-sous-catégorie")
+     *              @OA\Property(property="name", type="string", example="Nom de la sous-sous-catégorie"),
+     *              @OA\Property(property="sousCategorieId", type="integer", example=1, description="ID de la sous catégorie parente")
+
      *          )
      *      ),
      *     @OA\Response(
@@ -217,9 +221,13 @@ class SousSouSCategotieController extends Controller
     {
         try {
             $sousSousCategorie = SousSousCategorie::findOrFail($id);
-            $sousSousCategorie->update($request->only('name'));
+
+            $dataToUpdate = $request->only(['name', 'sousCategorieId']);
+            $sousSousCategorie->update($dataToUpdate);
+
             $sousSousCategorieQuery = SousSousCategorie::orderBy('id', 'desc')->get();
             $sousSousCategorie = SousSousCategorieResource::collection($sousSousCategorieQuery);
+
             return $this->returnData($sousSousCategorie, 200, 'Liste des sous sous categorie réaccordé avec Success');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
@@ -229,7 +237,7 @@ class SousSouSCategotieController extends Controller
     /**
      * @OA\Delete(
      *      path="/api/sous-sous-categorie/{id}",
-     *      operationId="deleteSousSousCategorie",
+     *      operationId="delete-sous-sous-categorie",
      *      tags={"Sous Sous Catégorie"},
      *      summary="Supprime une sous-sous-catégorie",
      *      description="Supprime une sous-sous-catégorie spécifiée par son ID.",
