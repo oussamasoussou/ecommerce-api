@@ -1,29 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Couleur;
+namespace App\Http\Controllers\Taille;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Couleur;
+use App\Models\Taille;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\Builder;
-use App\Http\Resources\Couleur\CouleurResource;
-use App\Http\Requests\Couleur\StoreCouleurRequest;
-use App\Http\Requests\Couleur\UpdateCouleurRequest;
+use App\Http\Resources\Taille\TailleResource;
+use App\Http\Requests\Taille\StoreTailleRequest;
+use App\Http\Requests\Taille\UpdateTailleRequest;
 
-
-class CouleurController extends Controller
+class TailleController extends Controller
 {
     use GeneralTrait;
 
     /**
      * @OA\Get(
-     *      path="/api/couleurs",
-     *      operationId="getColors",
-     *      tags={"Couleur"},
-     *      summary="Retrieve color list",
-     *      description="Récupérer la liste de toutes les couleurs disponibles.",
+     *      path="/api/tailles",
+     *      operationId="getTailles",
+     *      tags={"Taille"},
+     *      summary="Récupérer la liste des tailles",
+     *      description="Récupère la liste de toutes les tailles disponibles.",
      *     @OA\Response(
      *         response=200,
      *         description="Success",
@@ -45,12 +44,13 @@ class CouleurController extends Controller
      *     )
      * )
      */
+
     public function index()
     {
         try {
-            $couleurs = Couleur::orderBy('prix', 'asc')->get();
-            $couleur = CouleurResource::collection($couleurs);
-            return $this->returnData($couleur, 200, 'Liste des couleur réaccordées avec succès');
+            $tailles = Taille::orderBy('prix', 'asc')->get();
+            $taille = TailleResource::collection($tailles);
+            return $this->returnData($taille, 200, 'Liste des taille réaccordées avec succès');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
@@ -58,17 +58,16 @@ class CouleurController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/api/couleurs",
-     *      operationId="createColor",
-     *      tags={"Couleur"},
-     *      summary="Create a new color",
-     *      description="Créer une nouvelle couleur avec les données fournies dans la requête.",
+     *      path="/api/tailles",
+     *      operationId="createTaille",
+     *      tags={"Taille"},
+     *      summary="Créer une nouvelle taille",
+     *      description="Crée une nouvelle taille avec les données fournies dans la requête.",
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"name", "colorCode"},
-     *              @OA\Property(property="name", type="string", example="Red"),
-     *              @OA\Property(property="colorCode", type="string", example="#FF0000")
+     *              required={"size"},
+     *              @OA\Property(property="size", type="string", example="XL")
      *          )
      *      ),
      *     @OA\Response(
@@ -93,16 +92,15 @@ class CouleurController extends Controller
      * )
      */
 
-    public function store(StoreCouleurRequest $request)
+    public function store(StoreTailleRequest $request)
     {
         try {
-            $couleur = Couleur::create([
-                'name' => $request->name,
-                'colorCode' => $request->colorCode,
+            $taille = Taille::create([
+                'size' => $request->size,
             ]);
-            $couleurQuery = Couleur::orderBy('id', 'desc')->get();
-            $couleur = CouleurResource::collection($couleurQuery);
-            return $this->returnData($couleur, 200, 'Liste des couleur réaccordé avec Success');
+            $tailleQuery = Taille::orderBy('id', 'desc')->get();
+            $taille = TailleResource::collection($tailleQuery);
+            return $this->returnData($taille, 200, 'Liste des taille réaccordé avec Success');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
@@ -110,14 +108,14 @@ class CouleurController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/couleurs/{id}",
-     *      operationId="getColorById",
-     *      tags={"Couleur"},
-     *      summary="Retrieve color by ID",
-     *      description="Récupérer les détails d'une couleur spécifiée par son identifiant (ID).",
+     *      path="/api/tailles/{id}",
+     *      operationId="getTailleById",
+     *      tags={"Taille"},
+     *      summary="Récupérer une taille par ID",
+     *      description="Récupère les détails d'une taille spécifiée par son ID.",
      *      @OA\Parameter(
      *          name="id",
-     *          description="ID de la couleur à récupérer",
+     *          description="ID de la taille à récupérer",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -149,9 +147,9 @@ class CouleurController extends Controller
     public function show(string $id)
     {
         try {
-            $couleur = Couleur::findOrFail($id);
-            $couleur = new CouleurResource($couleur);
-            return $this->returnData($couleur, 200, 'Couleur réaccordé avec Success');
+            $taille = Taille::findOrFail($id);
+            $taille = new TailleResource($taille);
+            return $this->returnData($taille, 200, 'taille réaccordé avec Success');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
@@ -159,14 +157,14 @@ class CouleurController extends Controller
 
     /**
      * @OA\Put(
-     *      path="/api/couleurs/{id}",
-     *      operationId="updateColor",
-     *      tags={"Couleur"},
-     *      summary="Update color",
-     *      description="Mettre à jour la couleur spécifiée avec les données fournies",
+     *      path="/api/tailles/{id}",
+     *      operationId="updateTaille",
+     *      tags={"Taille"},
+     *      summary="Mettre à jour une taille",
+     *      description="Met à jour la taille spécifiée avec les données fournies dans la requête.",
      *      @OA\Parameter(
      *          name="id",
-     *          description="ID de la couleur à mettre à jour",
+     *          description="ID de la taille à mettre à jour",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -176,9 +174,8 @@ class CouleurController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
-     *              required={"name", "colorCode"},
-     *              @OA\Property(property="name", type="string", example="Blue"),
-     *              @OA\Property(property="colorCode", type="string", example="#0000FF")
+     *              required={"size"},
+     *              @OA\Property(property="size", type="string", example="XL")
      *          )
      *      ),
      *     @OA\Response(
@@ -203,18 +200,18 @@ class CouleurController extends Controller
      * )
      */
 
-    public function update(UpdateCouleurRequest $request, string $id)
+    public function update(UpdateTailleRequest $request, string $id)
     {
         try {
-            $couleur = Couleur::findOrFail($id);
+            $taille = Taille::findOrFail($id);
 
-            $dataToUpdate = $request->only(['name', 'colorCode']);
-            $couleur->update($dataToUpdate);
+            $dataToUpdate = $request->only(['size']);
+            $taille->update($dataToUpdate);
 
-            $couleurQuery = Couleur::orderBy('id', 'desc')->get();
-            $couleur = CouleurResource::collection($couleurQuery);
+            $tailleQuery = Taille::orderBy('id', 'desc')->get();
+            $taille = TailleResource::collection($tailleQuery);
 
-            return $this->returnData($couleur, 200, 'Liste des couleur réaccordé avec succès');
+            return $this->returnData($taille, 200, 'Liste des taille réaccordé avec succès');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }
@@ -222,14 +219,14 @@ class CouleurController extends Controller
 
     /**
      * @OA\Delete(
-     *      path="/api/couleurs/{id}",
-     *      operationId="deleteColor",
-     *      tags={"Couleur"},
-     *      summary="Delete color",
-     *      description="Supprimer la couleur spécifiée.",
+     *      path="/api/tailles/{id}",
+     *      operationId="deleteTaille",
+     *      tags={"Taille"},
+     *      summary="Supprimer une taille",
+     *      description="Supprime la taille spécifiée.",
      *      @OA\Parameter(
      *          name="id",
-     *          description="ID de la couleur à supprimer",
+     *          description="ID de la taille à supprimer",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -261,11 +258,11 @@ class CouleurController extends Controller
     public function destroy(string $id)
     {
         try {
-            $couleur = Couleur::findOrFail($id);
-            $couleur->delete();
-            $couleurQuery = Couleur::orderBy('id', 'desc')->get();
-            $couleur = CouleurResource::collection($couleurQuery);
-            return $this->returnData($couleur, 200, 'Liste des couleur réaccordé avec Success');
+            $taille = Taille::findOrFail($id);
+            $taille->delete();
+            $tailleQuery = Taille::orderBy('id', 'desc')->get();
+            $taille = TailleResource::collection($tailleQuery);
+            return $this->returnData($taille, 200, 'Liste des taille réaccordé avec Success');
         } catch (\Exception $exception) {
             return $this->returnError(Response::HTTP_BAD_REQUEST, $exception->getMessage());
         }

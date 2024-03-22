@@ -5,6 +5,7 @@ use App\Http\Controllers\Categorie\SousCategorieController;
 use App\Http\Controllers\Categorie\SousSouSCategotieController;
 use App\Http\Controllers\Couleur\CouleurController;
 use App\Http\Controllers\Livraison\LivraisonController;
+use App\Http\Controllers\Taille\TailleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,4 @@ Route::apiResource('sous-categorie', SousCategorieController::class);
 Route::apiResource('sous-sous-categorie', SousSouSCategotieController::class);
 Route::apiResource('livraisons', LivraisonController::class);
 Route::apiResource('couleurs', CouleurController::class);
+Route::apiResource('tailles', TailleController::class);
